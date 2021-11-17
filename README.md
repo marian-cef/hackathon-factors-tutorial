@@ -1,4 +1,4 @@
-# marian-eu-project-factors-tutorial
+# 2021 MT Half-Marathon: Tutorial on Factored NMT Models in Marian
 
 This is a tutorial on using factors in Marian for the 2021 MT Half-Marathon organized by the EU Marian Project members. For a comprehensive README on factors usage in marian, see the [docs](https://github.com/marian-nmt/marian-dev/blob/master/doc/factors.md). Much of the same information is summarized in this tutorial, but we recommend reading that document first. For more background on factors in NMT in general, see [Sennrich and Haddow (2016)](https://aclanthology.org/W16-2209/)[^1].
 
