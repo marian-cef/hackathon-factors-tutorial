@@ -1,0 +1,2 @@
+source_and_target_factors/pre-trained-model/model.npz.best-bleu.npz filter=lfs diff=lfs merge=lfs -text
+source_factors_only/pre-trained-model/model.npz.best-bleu.npz filter=lfs diff=lfs merge=lfs -text
