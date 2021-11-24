@@ -3,6 +3,9 @@
 # exit if something wrong happens
 set -e
 
+# source env variables
+source "$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"/../.env
+
 # Posprocessing steps (debpe, de-escape special characters, detokenize)
 cat $1 | sed 's/@@ //g' > valid.hyps.debpe
 
@@ -12,7 +15,7 @@ cat valid.hyps.debpe \
           -e 's/\&usc;/_/g' \
           -e 's/\&ppe;/|/g' \
           -e 's/\&esc;/\\/g' \
-    | /mnt/shared/home/christine/marian-eu-project-factors-tutorial/tools/moses-scripts/scripts/tokenizer/detokenizer.perl -l en \
+    | $MOSES/scripts/tokenizer/detokenizer.perl -l en \
     > valid.hyps.debpe.detok
 
 # Exit success

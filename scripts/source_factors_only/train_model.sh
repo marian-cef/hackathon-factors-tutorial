@@ -28,7 +28,7 @@ $MARIAN/marian -m $MODEL_DIR/model.npz \
                 --valid-mini-batch 16 \
                 --valid-metrics translation bleu cross-entropy perplexity \
                 --valid-log $MODEL_DIR/valid.log \
-                --valid-script-path /mnt/shared/home/christine/marian-eu-project-factors-tutorial/scripts/validate.sh \
+                --valid-script-path $SCRIPTS/validate.sh \
                 --log $MODEL_DIR/train.log \
                 --early-stopping 5 \
                 --learn-rate 0.0003 \
