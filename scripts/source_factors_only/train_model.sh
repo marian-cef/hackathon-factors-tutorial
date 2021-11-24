@@ -11,9 +11,9 @@ source "$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"/../../.env
 echo "Training started..."
 mkdir -p $MODEL_DIR
 $MARIAN/marian -m $MODEL_DIR/model.npz \
-                -t $DATA/$TRAIN_PREFIX.tok.fact.bpe.$SRC_LANG $DATA/$TRAIN_PREFIX.tok.bpe.$TGT_LANG \
-                --valid-sets $DATA/$VALID_PREFIX.tok.fact.bpe.$SRC_LANG $DATA/$VALID_PREFIX.tok.bpe.$TGT_LANG \
-                -v $DATA/vocab.$SRC_LANG$TGT_LANG.fsv $DATA/vocab.$SRC_LANG$TGT_LANG.yml \
+                -t $DATA/$TRAIN_PREFIX.tok.bpe.$SRC_LANG $DATA/$TRAIN_PREFIX.tok.bpe.$TGT_LANG \
+                --valid-sets $DATA/$VALID_PREFIX.tok.bpe.$SRC_LANG $DATA/$VALID_PREFIX.tok.bpe.$TGT_LANG \
+                -v $DATA/vocab.$SRC_LANG$TGT_LANG.yml $DATA/vocab.$SRC_LANG$TGT_LANG.yml \
                 --type transformer \
                 --dec-depth 6 --enc-depth 6 \
                 --dim-emb 512 \
@@ -25,9 +25,10 @@ $MARIAN/marian -m $MODEL_DIR/model.npz \
                 --transformer-postprocess "dan" \
                 --transformer-dim-ffn 2048 \
                 --tied-embeddings-all \
-                --valid-mini-batch 8 \
-                --valid-metrics bleu cross-entropy perplexity \
+                --valid-mini-batch 16 \
+                --valid-metrics translation bleu cross-entropy perplexity \
                 --valid-log $MODEL_DIR/valid.log \
+                --valid-script-path $SCRIPTS/validate.sh \
                 --log $MODEL_DIR/train.log \
                 --early-stopping 5 \
                 --learn-rate 0.0003 \
@@ -44,8 +45,6 @@ $MARIAN/marian -m $MODEL_DIR/model.npz \
                 --sync-sgd \
                 --devices $GPUS \
                 --workspace 7000 \
-                --factors-dim-emb 8 \
-                --factors-combine concat \
                 --disp-freq 100 \
                 --save-freq 500 \
                 --valid-freq 500 \

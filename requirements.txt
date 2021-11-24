@@ -1,2 +1,5 @@
 subword-nmt==0.3.7
 sacrebleu==1.5.1
+torch==1.9.*
+unbabel-comet==1.0.1
+

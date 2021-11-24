@@ -36,24 +36,25 @@ sed -i $DATA/$prefix.tok.$SRC_LANG -e 's/#/\&htg;/g' -e 's/:/\&cln;/g' -e 's/_/\
 sed -i $DATA/$prefix.tok.$TGT_LANG -e 's/#/\&htg;/g' -e 's/:/\&cln;/g' -e 's/_/\&usc;/g' -e 's/|/\&ppe;/g' -e 's/\\/\&esc;/g'
 
 
-# Add factors denoting capitalization information
-echo "Adding capitalization factors..."
-python $SCRIPTS/add_capitalization_factors.py --input_file $DATA/$prefix.tok.$SRC_LANG --output_file $DATA/$prefix.tok.fact.$SRC_LANG --factor_prefix $FACTOR_PREFIX
+# # Add factors denoting capitalization information
+# echo "Adding capitalization factors..."
+# python $SCRIPTS/add_capitalization_factors.py --input_file $DATA/$prefix.tok.$SRC_LANG --output_file $DATA/$prefix.tok.fact.$SRC_LANG --factor_prefix $FACTOR_PREFIX
 
 
-# We remove the factors from the annotated data to apply BPE, and later we extend the factors to the subworded text
-cat $DATA/$prefix.tok.fact.$SRC_LANG | sed "s/|${FACTOR_PREFIX}[0-9]//g" > $DATA/$prefix.tok.nofact.$SRC_LANG
+# # We remove the factors from the annotated data to apply BPE, and later we extend the factors to the subworded text
+# cat $DATA/$prefix.tok.fact.$SRC_LANG | sed "s/|${FACTOR_PREFIX}[0-9]//g" > $DATA/$prefix.tok.nofact.$SRC_LANG
 
 
 # Apply BPE
 echo "Applying BPE..."
-subword-nmt apply-bpe -c $DATA/$SRC_LANG$TGT_LANG.bpe --vocabulary $DATA/vocab.bpe.$SRC_LANG --vocabulary-threshold 50 < $DATA/$prefix.tok.nofact.$SRC_LANG > $DATA/$prefix.tok.nofact.bpe.$SRC_LANG
+subword-nmt apply-bpe -c $DATA/$SRC_LANG$TGT_LANG.bpe --vocabulary $DATA/vocab.bpe.$SRC_LANG --vocabulary-threshold 50 < $DATA/$prefix.tok.$SRC_LANG > $DATA/$prefix.tok.bpe.$SRC_LANG
 subword-nmt apply-bpe -c $DATA/$SRC_LANG$TGT_LANG.bpe --vocabulary $DATA/vocab.bpe.$TGT_LANG --vocabulary-threshold 50 < $DATA/$prefix.tok.$TGT_LANG > $DATA/$prefix.tok.bpe.$TGT_LANG
 
 
-# Extend BPE splits to factored corpus
-echo "Applying BPE to factored corpus..."
-python $SCRIPTS/transfer_factors_to_bpe.py --factored_corpus $DATA/$prefix.tok.fact.$SRC_LANG --bpe_corpus $DATA/$prefix.tok.nofact.bpe.$SRC_LANG --output_file $DATA/$prefix.tok.fact.bpe.$SRC_LANG
+# # Extend BPE splits to factored corpus
+# echo "Applying BPE to factored corpus..."
+# python $SCRIPTS/transfer_factors_to_bpe.py --factored_corpus $DATA/$prefix.tok.fact.$SRC_LANG --bpe_corpus $DATA/$prefix.tok.nofact.bpe.$SRC_LANG --output_file $DATA/$prefix.tok.fact.bpe.$SRC_LANG
 
 # Exit success
 exit 0
+
