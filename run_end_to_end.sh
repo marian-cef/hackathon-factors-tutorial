@@ -61,7 +61,7 @@ $SCRIPTS/$EXPERIMENT/postprocess.sh -p $TEST_PREFIX
 # Evaluate test data
 echo "Evaluating test data..."
 $SCRIPTS/$EXPERIMENT/evaluate_bleu.sh -p $TEST_PREFIX
-
+$SCRIPTS/$EXPERIMENT/evaluate_comet.sh -p $TEST_PREFIX
 
 # exit success
 exit 0
